@@ -68,15 +68,12 @@ returning a (key, value) tuple pair.
 """
 
 import copy
+import enum
 import functools
 try:
     import simplejson as json  # type: ignore
 except ImportError:
     import json  # type: ignore
-try:
-    import enum
-except ImportError:
-    import enum34 as enum  # type: ignore
 
 import six
 

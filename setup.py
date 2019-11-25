@@ -54,7 +54,6 @@ setup(
         'six',
     ],
     extras_require={
-        ':python_version < "3.4"': ['enum34'],
         'recomended': [
             'simplejson',
         ],
