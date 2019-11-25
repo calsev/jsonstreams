@@ -7,6 +7,7 @@ next
 New Features
 
 - Drop support for python 2
+- Drop six requirement
 
 0.4.2
 ------
