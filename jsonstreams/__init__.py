@@ -144,7 +144,7 @@ class BaseWriter(object):
             self.write_comma_literal = functools.partial(self.raw_write, ', ')
 
     def _indent(self):
-        return ' ' * self.baseindent * self.indent
+        return ' ' * self.baseindent * self.indent if self.indent else ''
 
     def raw_write(self, value, indent=False, newline=False):
         if indent:
@@ -521,9 +521,10 @@ class Stream(object):
                 the stream's root.
 
     Keyword Arguments:
-    indent   -- How much to indent each level, if set to 0 no indent will be
-                used and the stream will be written in a single line.
-                Default: 0
+    indent   -- How much to indent each level, if left at None no indent will be
+                used and the stream will be written in a single line. A value of
+                0 will result in newlines only.
+                Default: None
     encoder  -- A json.JSONEncoder instance. This will be used to encode
                 objects passed to the write method of the Stream and all
                 instances returned by the subarray and subobject methods of
@@ -537,7 +538,7 @@ class Stream(object):
         Type.array: Array,
     }
 
-    def __init__(self, jtype, filename=None, fd=None, indent=0, pretty=False,
+    def __init__(self, jtype, filename=None, fd=None, indent=None, pretty=False,
                  encoder=json.JSONEncoder):
         """Constructor."""
         assert filename or fd
