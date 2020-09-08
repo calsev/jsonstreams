@@ -525,6 +525,11 @@ class Stream(object):
                 used and the stream will be written in a single line. A value of
                 0 will result in newlines only.
                 Default: None
+    separators -- The punctuation plus whitespace to write between items and
+                key-value pairs, in the form (item_separator, key_separator).
+                If None defaults to the values for the encoder, see
+                https://docs.python.org/3/library/json.html#encoders-and-decoders.
+                Default: None
     encoder  -- A json.JSONEncoder instance. This will be used to encode
                 objects passed to the write method of the Stream and all
                 instances returned by the subarray and subobject methods of
@@ -538,14 +543,14 @@ class Stream(object):
         Type.array: Array,
     }
 
-    def __init__(self, jtype, filename=None, fd=None, indent=None, pretty=False,
+    def __init__(self, jtype, filename=None, fd=None, indent=None, separators=None, pretty=False,
                  encoder=json.JSONEncoder):
         """Constructor."""
         assert filename or fd
 
         self.__fd = fd or open(filename, 'w')
         self.__inst = self._types[jtype](
-            self.__fd, indent, 0, encoder(indent=indent), pretty=pretty)
+            self.__fd, indent, 0, encoder(indent=indent, separators=separators), pretty=pretty)
 
         self.subobject = self.__inst.subobject
         self.subarray = self.__inst.subarray
